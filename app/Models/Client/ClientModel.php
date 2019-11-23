@@ -22,8 +22,10 @@ class ClientModel extends Model
         'address',
         'city',
         'updated',
-        'gSPHod',
+        'MFD',
+
         'gSPHos',
+        'gSPHod',
         'gCYLod',
         'gCYLos',
         'gAXISod',
@@ -31,10 +33,7 @@ class ClientModel extends Model
         'gADDod',
         'gADDos',
         'gPD',
-        'gUpdated',
         'cBC',
         'notes',
-        'cUpdated',
-        'MFD',
     ];
 }
