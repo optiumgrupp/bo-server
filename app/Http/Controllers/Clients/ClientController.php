@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ClientCollection;
 use App\Models\Client\ClientModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class ClientController extends Controller
 
         $this->populateFilters($request, $query);
 
-        return $query->get();
+        return new ClientCollection($this->paginate($request, $query));
     }
 
     private function populateFilters(Request $request, Builder $query): void
@@ -84,5 +85,29 @@ class ClientController extends Controller
         if ($birthDay) {
             $query->where('birthDay', $birthDay);
         }
+    }
+
+    private function paginate(Request $request, Builder $query)
+    {
+        $perPage = 15;
+        $page = 1;
+
+        if ($request->has('perPage') && $request->get('perPage')) {
+            $perPage = $request->get('perPage');
+            if (!is_numeric($perPage)) {
+                throw new \Exception('perPage is not a number');
+
+            }
+        }
+
+        if ($request->has('page') && $request->get('page')) {
+            $page = $request->get('page');
+            if (!is_numeric($page)) {
+                throw new \Exception('page is not a number');
+            }
+        }
+
+
+        return $query->paginate($perPage, '*', 'page', $page);
     }
 }
