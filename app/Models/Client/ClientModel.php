@@ -20,7 +20,6 @@ class ClientModel extends Model
         'email',
         'phone',
         'address',
-        'city',
         'updated',
         'MFD',
 
