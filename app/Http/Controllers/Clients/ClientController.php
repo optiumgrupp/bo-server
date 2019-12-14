@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client\ClientModel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -12,6 +13,13 @@ class ClientController extends Controller
     {
         $query = ClientModel::query();
 
+        $this->populateFilters($request, $query);
+
+        return $query->get();
+    }
+
+    private function populateFilters(Request $request, Builder $query): void
+    {
         $firstName = null;
         $lastName = null;
         $birthYear = null;
@@ -76,7 +84,5 @@ class ClientController extends Controller
         if ($birthDay) {
             $query->where('birthDay', $birthDay);
         }
-
-        return $query->get();
     }
 }
