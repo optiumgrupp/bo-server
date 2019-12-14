@@ -18,7 +18,7 @@ Route::group(
         'namespace' => 'Clients',
         'prefix' => 'clients',
     ], function () {
-    Route::get('/', [
+    Route::post('/', [
         'uses' => 'ClientController@getAll',
     ]);
 });
